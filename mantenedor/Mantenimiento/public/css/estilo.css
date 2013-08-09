@@ -1,0 +1,139 @@
+body,html {
+    font-family: Arial, sans-serif;
+    font-size: 85%;
+    color: #808080;
+}
+
+h1 {
+    margin: 0;
+}
+
+/* HEADER */
+
+#header {
+    /*position: relative;*/
+    /*height: 70px;*/
+}
+
+#header h1 {
+    margin: 0;
+    padding: 0;
+}
+
+/* TOP-MENU */
+
+#top-menu {
+    position: absolute;
+    top: 25px;
+    right: 2em;
+}
+
+#ThemeRoller {
+    position: absolute;
+    right: 200px;
+    top: 30px;
+}
+
+/* USUARIO ACTUAL */
+
+#header #current-user {
+    position: absolute;
+    top: 75px;
+    right: 100px;
+    font-weight: bold;
+}
+
+/* VERSION */
+
+#header #version {
+    position: absolute;
+    top: 75px;
+    right: 2em;
+}
+
+/* CONTENT */
+
+#content-login {
+    background-color: #fff;
+}
+
+#content {
+    background-color: #fff;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+
+/* FOOTER */
+
+#footer {
+    text-align: right;
+    height: 30px;
+    padding: 10px 10px 0 0;
+}
+
+#footer .cake-sql-log, .cake-debug, .cake-stack-trace {
+    text-align: left;
+    color: #808080;
+}
+
+/* LOGIN */
+
+#login {
+    margin: 20px auto;
+    width: 320px;
+}
+
+#login form {
+    text-align: left;
+    width: 290px;
+    margin-top: 10px;
+    padding:16px 8px 40px 8px;
+    font-weight:normal;
+    -moz-border-radius:11px;
+    -khtml-border-radius:11px;
+    -webkit-border-radius:11px;
+    border-radius:5px;
+    background:#fff;
+    border:1px solid #e5e5e5;
+    -moz-box-shadow:rgba(200,200,200,1) 0 4px 18px;
+    -webkit-box-shadow:rgba(200,200,200,1) 0 4px 18px;
+    -khtml-box-shadow:rgba(200,200,200,1) 0 4px 18px;
+    box-shadow:rgba(200,200,200,1) 0 4px 18px;
+}
+
+#login form div {
+    margin-bottom: 0;
+    padding: 0 0.5em;
+}
+
+#login form div.submit {
+    margin-top: 0;
+}
+
+#login form label {
+    text-align: left;
+    width: 100%;
+    color: #777777;
+    font: 13px "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+}
+
+#login #UserUsername, #login #UserPassword {
+    background:none repeat scroll 0 0 #FBFBFB;
+    color:#555555;
+    font: 11px "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+    font-weight:normal;
+    border:1px solid #E5E5E5;
+    font-size:24px;
+    margin-bottom:16px;
+    margin-right:6px;
+    margin-top:2px;
+    padding:3px;
+    width:97%;
+}
+
+#login div.submit {
+    margin-left: 0px;
+    float:right;
+}
+
