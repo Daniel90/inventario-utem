@@ -44,7 +44,8 @@ Route::get('/', function()
 
 Route::get('/dependencia', function()
 {
-	return View::make('controlBienes.dependencia');
+	$ides = Bien::all();
+	return View::make('controlBienes.dependencia')->with("ides",$ides);
 });
 
 
