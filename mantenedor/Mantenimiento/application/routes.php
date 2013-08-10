@@ -48,7 +48,30 @@ Route::get('/dependencia', function()
 	return View::make('controlBienes.dependencia')->with("ides",$ides);
 });
 
+Route::post('/dependencia', function()
+{
+	$historial =  new Historial;
+	$bien = Bien::where('id','=', Input::get('bienid'))->first(array('id','centrocostos_id','Tipo'));
+	if($bien)
+	{
+		$historial->bienes_id = $bien->id;
+		$historial->centrocostos_id = $bien->centrocostos_id;
+		$historial->Tipo = $bien->tipo;
+		$historial->save();
+		for($i=1;$i<=4;$i++)
+		{
+			if(Input::get('ant') == "centro de costo ".$i.".")
+			{
+				$bien->centrocostos_id = "10000".$i; 
+				$bien->save();
+				echo "funciono";
+			}
+		}	
+	}
+	else
+		echo "no funciono";
 
+});
 
 Route::get('/login', function()
 {
