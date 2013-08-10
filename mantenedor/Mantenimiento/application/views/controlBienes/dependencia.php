@@ -6,8 +6,13 @@
 
     <body>
       <form action="dependencia.php" method="POST" target="_blank"> 
-        <input type="text" name="elTexto"> 
-        <input type="submit" value="Envia"> 
+        <select name = "otro">
+          @if($ides)
+            @foreach($ides as $id)       
+                <option value = '{{$id -> id}}'>{{ $id -> id }}</option>
+            @endforeach
+          @endif
+        </select>
       </form>
       
     </body>
