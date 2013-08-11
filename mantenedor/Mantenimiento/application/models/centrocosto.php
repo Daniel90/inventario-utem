@@ -1,5 +1,5 @@
 <?php
-	class Centrocosto extends Eloquent
+	class Centrocostos extends Eloquent
 	{
 		public static $table = 'centrocostos';
 		public function bienes()
