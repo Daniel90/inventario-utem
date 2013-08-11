@@ -41,11 +41,9 @@ Route::get('/', function()
 {
 	return View::make('home.index');
 });
-
-Route::get('/dependencia', function()
+Route::get('/logon', function()
 {
-	$ides = Bien::all();
-	return View::make('controlBienes.dependencia')->with("ides",$ides);
+	return View::make('home.logon');
 });
 
 Route::post('/dependencia', function()
@@ -71,26 +69,6 @@ Route::post('/dependencia', function()
 	else
 		echo "no funciono";
 
-});
-
-Route::get('/login', function()
-{
-	return View::make('home.index');
-});
-
-Route::get('/inventory', function()
-{
-	$admins = Centrocosto::all();
-	return View::make('informesConsultas.inventory')->with("admins",$admins);
-});
-
-Route::get('/altaBien', function()
-{
-	return View::make('controlBienes.altaBien');
-});
-Route::get('/bajaBien', function()
-{
-	return View::make('controlBienes.bajaBien');
 });
 
 
@@ -232,7 +210,7 @@ Route::post('/bajaBien', function(){
 });
 
 
-Route::post('/login', function()   //para autentificar un login
+Route::post('/logon', function()   //para autentificar un login
 {
 	$usuario = Input::get('usuario');
 	$password = Input::get('pass');
@@ -243,18 +221,33 @@ Route::post('/login', function()   //para autentificar un login
 	}
 	else
 	{
-		return Redirect::to('/')->with('login_errors',true);
+		return Redirect::to('/logon')->with('login_errors',true);
 	}
 });
 
-Route::get('/cuerpo', array('before' => 'auth', function()
+Route::group(array('before' => 'auth'),function()
 {
-	return View::make('cuerpo.index');   //No se ejecutara hasta que no pase la autentificacion
-}));
-Route::get('/altaBien', array('before' => 'auth', function()
-{
-	return View::make('controlBienes.altaBien');   //No se ejecutara hasta que no pase la autentificacion
-}));
+	Route::get('/cuerpo',function(){
+		return View::make('cuerpo.index');
+	});
+	Route::get('altaBien',function(){
+		return View::make('controlBienes.altaBien');
+	});
+	Route::get('/bajaBien', function()
+	{
+		return View::make('controlBienes.bajaBien');
+	});
+	Route::get('/dependencia', function()
+	{
+		$ides = Bien::all();
+		return View::make('controlBienes.dependencia')->with("ides",$ides);
+	});
+	Route::get('/inventory', function()
+	{
+		$bienes = DB::table('centrocostos')->join('bienes','centrocostos.id','=','bienes.centrocostos_id')->get();
+		return View::make('informesConsultas.inventory')->with("bienes",$bienes);
+	});
+});
 
 Route::get('logout', function()
 {
