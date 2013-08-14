@@ -235,7 +235,8 @@ Route::group(array('before' => 'auth'),function()
 	});
 	Route::get('/bajaBien', function()
 	{
-		return View::make('controlBienes.bajaBien');
+		$ides = Bien::all();
+		return View::make('controlBienes.bajaBien')->with("ides",$ides);
 	});
 	Route::get('/dependencia', function()
 	{
@@ -328,5 +329,5 @@ Route::filter('csrf', function()
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::to('login');
+	if (Auth::guest()) return Redirect::to('logon');
 });
