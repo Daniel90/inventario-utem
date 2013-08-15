@@ -41,43 +41,12 @@ Route::controller('home');
 
 Route::get('/logon', function()
 {
-<<<<<<< HEAD
-	$ides = Bien::all();
-	return View::make('controlBienes.dependencia')->with("ides",$ides);
-=======
 	return View::make('home.logon');
->>>>>>> 84bccb7b7f210376e793967e0fdb2611e1b09265
 });
 
-Route::post('/dependencia', function()
-{
-	$historial =  new Historial;
-	$bien = Bien::where('id','=', Input::get('bienid'))->first(array('id','centrocostos_id','Tipo'));
-	if($bien)
-	{
-		$historial->bienes_id = $bien->id;
-		$historial->centrocostos_id = $bien->centrocostos_id;
-		$historial->Tipo = $bien->tipo;
-		$historial->save();
-		for($i=1;$i<=4;$i++)
-		{
-			if(Input::get('ant') == "centro de costo ".$i.".")
-			{
-				$bien->centrocostos_id = "10000".$i; 
-				$bien->save();
-				echo "funciono";
-			}
-		}	
-	}
-	else
-		echo "no funciono";
 
-<<<<<<< HEAD
-});
-=======
 //inicio mantenedor
 Route::post('/serial',function(){
->>>>>>> 84bccb7b7f210376e793967e0fdb2611e1b09265
 
 	DB::table('bienes')
 			->where('id',"=", Input::get('bienid'))
