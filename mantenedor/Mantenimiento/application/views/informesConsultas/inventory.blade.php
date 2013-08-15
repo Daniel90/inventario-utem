@@ -7,65 +7,61 @@
         </title>
         <a href = '/index.php/cuerpo'><img src="/img/top_app_logo.png" alt="Universidad Tecnologica Metropolitana" /></a>
         <a href = '/index.php/cuerpo'><img src="/img/top_app_title.png" alt="Mantenedor de Inventario" /></a>
-        {{ HTML::style('css/style.css') }}
-        {{ HTML::style('css/UI Lightness/jquery-ui-1.8.6.custom.css') }}
-        {{ HTML::style('css/ui.jqgrid.css') }}
-        {{ HTML::style('css/bootstrap.css') }}
-        {{ HTML::style('css/bootstrap-responsive.css') }}
-        {{ HTML::style('css/TableTools.css') }}
-        {{ HTML::style('css/TableTool_JUI.css') }}
+         {{ HTML::style('css/style.css') }}
+         {{ HTML::style('css/UI Lightness/jquery-ui-1.8.6.custom.css') }}
+         {{ HTML::style('css/ui.jqgrid.css') }}
+         {{ HTML::style('css/bootstrap.css') }}
+         {{ HTML::style('css/bootstrap-responsive.css') }}
         <script type="text/javascript">
       var webroot = '/foro/index.blade.php';var wroot = '/Laravel/public/';var jsession_data = [];var theme = "UI Lightness";
     </script>
-    <style type="text/css">
+
+    <style type="text/css" title="currentStyle">
       @import "/css/demo_page.css";
       @import "/css/demo_table.css";
+      @import "/css/TableTools.css";
+      tr.selected {
+        background-color: red !important;
+      }
     </style>
-    <script type="text/javascript" language="javascript" src="/js/jquery.js"></script>
-    <script class="jsbin" src="http://datatables.net/download/build/jquery.dataTables.nightly.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/ZeroClipboard.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/TableTools.js"></script>
       
-        {{ HTML::script('js/jquery-1.4.2.min.js') }} <!--necesario-->
-        {{ HTML::script('js/jquery-ui-1.8.6.custom.min.js') }} <!--necesario-->
-        {{ HTML::script('js/jquery.layout.min.js') }} <!--necesario-->
-        {{ HTML::script('js/jquery.jqGrid.min.js') }} <!--necesario-->
-        {{ HTML::script('js/themeswitchertool.js') }} <!--necesario-->
-        {{ HTML::script('js/layout-default.js') }} 
-        {{ HTML::script('js/jquery.dataTables.js') }}
-        {{ HTML::script('js/jquery.dataTables.min.js') }}
-        {{ HTML::script('js/TableTools.js') }}
-        {{ HTML::script('js/TableTools.min.js') }}
-        {{ HTML::script('js/ZeroClipboard.js') }}
+      {{ HTML::script('js/jquery.validate.js') }}
+      
+      {{ HTML::script('js/jquery.selectboxes.js') }}
+        {{ HTML::script('js/jquery-ui-1.8.6.custom.min.js') }}
+      {{ HTML::script('js/jquery.ui.datepicker-es.js') }}
+        {{ HTML::script('js/jquery.layout.min.js') }}
+      {{ HTML::script('js/i18n/grid.locale-sp.js') }}
+         {{ HTML::script('js/jquery.jqGrid.min.js') }}
+      {{ HTML::script('js/general.js') }}
+      {{ HTML::script('js/themeswitchertool.js') }}
+      {{ HTML::script('js/layout-default.js') }}
       <script>
-       $(document).ready(function() {
-            $('#example').dataTable( {
-                "aaSorting": [[ 1, "desc" ]],
-                "bStateSave": true,
-                "oLanguage": {
-                  "sProcessing":     "Procesando...",
-                  "sLengthMenu":     "Mostrar _MENU_ registros",
-                  "sZeroRecords":    "No se encontraron resultados",
-                  "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                  "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                  "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                  "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                  "sInfoPostFix":    "",
-                  "sSearch":         "Buscar:",
-                  "sUrl":            "",
-                  "sInfoThousands":  ",",
-                  "sLoadingRecords": "Cargando...",
-                  "oPaginate": {
-                      "sFirst":    "Primero",
-                      "sLast":     "Último",
-                      "sNext":     "Siguiente",
-                      "sPrevious": "Anterior"
-                  },
-                  "oAria": {
-                      "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-                }
-            } );
-        });
+       $(document).ready( function () {
+        
+        var oTable = $('#example').dataTable({
+          
+          "sPaginationType": "full_numbers",
+          "oLanguage": {
+            "sLengthMenu": "Mostrar _MENU_ registros por pagina",
+            "sZeroRecords": "No se encontraron resultados",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Ningún dato disponible en esta tablas",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sSearch":         "Buscar:"
+            
+          },
+          "sDom": 'T<"clear">lfrtip',
+          "oTableTools": {
+            "sSwfPath": "/swf/copy_csv_xls_pdf.swf",
+          }
+
+          });
+             } );
 
         
         function abre() {
@@ -162,7 +158,6 @@
 
         <!--Menu central-->
         <div id="content" class="ui-layout-center">
-               <script>var pfHeaderImgUrl = '';var pfHeaderTagline = '';var pfdisableClickToDel = 0;var pfHideImages = 0;var pfImageDisplayStyle = 'right';var pfDisablePDF = 0;var pfDisableEmail = 0;var pfDisablePrint = 0;var pfCustomCSS = '';var pfBtVersion='1';(function(){var js, pf;pf = document.createElement('script');pf.type = 'text/javascript';if('https:' == document.location.protocol){js='https://pf-cdn.printfriendly.com/ssl/main.js'}else{js='http://cdn.printfriendly.com/printfriendly.js'}pf.src=js;document.getElementsByTagName('head')[0].appendChild(pf)})();</script><a href="http://www.printfriendly.com" style="color:#6D9F00;text-decoration:none;" class="printfriendly" onclick="window.print();return false;" title="Printer Friendly and PDF"><img style="border:none;-webkit-box-shadow:none;box-shadow:none;" src="http://cdn.printfriendly.com/pf-button-both.gif" alt="Print Friendly and PDF"/></a>
 
           <div id="container">
                         <h3 class="text-info" style="text-align:center;">Bienes del inventario</h3>
