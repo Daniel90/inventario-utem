@@ -37,15 +37,16 @@ Route::get('/enter', function()
 {
 	return View::make('cuerpo.enter');
 });
-Route::get('/', function()
-{
-	return View::make('home.index');
-});
+Route::controller('home');
 
-Route::get('/dependencia', function()
+Route::get('/logon', function()
 {
+<<<<<<< HEAD
 	$ides = Bien::all();
 	return View::make('controlBienes.dependencia')->with("ides",$ides);
+=======
+	return View::make('home.logon');
+>>>>>>> 84bccb7b7f210376e793967e0fdb2611e1b09265
 });
 
 Route::post('/dependencia', function()
@@ -71,108 +72,190 @@ Route::post('/dependencia', function()
 	else
 		echo "no funciono";
 
+<<<<<<< HEAD
+});
+=======
+//inicio mantenedor
+Route::post('/serial',function(){
+>>>>>>> 84bccb7b7f210376e793967e0fdb2611e1b09265
+
+	DB::table('bienes')
+			->where('id',"=", Input::get('bienid'))
+			->update(array('NumeroSerie' => Input::get('serie_text') ));
+	return Redirect::to('/inventory');
 });
 
-Route::get('/login', function()
+Route::post('/dependencia', function()
 {
-	return View::make('home.index');
+	$historial =  new Historial;
+	$bien = Bien::where('id','=', Input::get('bienid'))->first(array('id','centrocostos_id','Tipo'));
+	if($bien)
+	{
+		$historial->bienes_id = $bien->id;
+		$historial->centrocostos_id = $bien->centrocostos_id;
+		$historial->Tipo = $bien->tipo;
+		$historial->save();
+		for($i=1;$i<=4;$i++)
+		{
+			if(Input::get('ant') == "centro de costo ".$i.".")
+			{
+				$bien->centrocostos_id = "10000".$i; 
+				$bien->save();
+				return Redirect::to('/inventory');
+			}
+		}	
+	}
+	else
+		echo "no funciono";
+
 });
 
-Route::get('/inventory', function()
-{
-	$admins = Centrocosto::all();
-	return View::make('informesConsultas.inventory')->with("admins",$admins);
-});
 
-Route::get('/altaBien', function()
-{
-	return View::make('controlBienes.altaBien');
-});
-Route::get('/bajaBien', function()
-{
-	return View::make('controlBienes.bajaBien');
-});
 
 
 Route::post('/altaBien', function()      //formulario alta bien
 {
 	//try
 	//{
-		$bien = new Bien;
-		if(Input::get('codigoCentro_select') == "centro de costo 1.")
+		$numero = Input::get('NumUnidades_text');
+		if($numero>1)
 		{
-			$bien->centrocostos_id = 100001;
-		}
-		else if(Input::get('codigoCentro_select') == "centro de costo 2.")
-		{
-			$bien->centrocostos_id = 100002;
-		}
-		else if(Input::get('codigoCentro_select') == "centro de costo 3.")
-		{
-			$bien->centrocostos_id = 100003;
-		}
-		else if(Input::get('codigoCentro_select') == "centro de costo 4.")
-		{
-			$bien->centrocostos_id = 100004;
-		}
+			for($i=0;$i<$numero;$i++)
+			{
+				$bien = new Bien;
 
-		$bien->idGrupo = Input::get('grupo_text');
-		$bien->idSubGrupo = Input::get('subGrupo_text');
-		$bien->idTipo = Input::get('tipo_text');
+				for($j=1;$j<=4;$j++)
+				{
+					if(Input::get('codigoCentro_select') == "centro de costo ".$j.".")
+						$bien->centrocostos_id = "10000".$j; 
+				}
 
-		$bien->Nombre = Input::get('nombre_text');
-		$bien->NumeroDeFactura = Input::get('numeroFactura_text');
+				$bien->idGrupo = Input::get('grupo_text');
+				$bien->idSubGrupo = Input::get('subGrupo_text');
+				$bien->idTipo = Input::get('tipo_text');
 
-		if(Input::get('tipo_select') == "w")
-		{
-			$bien->Tipo = "w";
-		}
-		else if(Input::get('tipo_select') == "x")
-		{
-			$bien->Tipo = "x";
-		}
-		else if(Input::get('tipo_select') == "y")
-		{
-			$bien->Tipo = "y";
-		}
-		else if(Input::get('tipo_select') == "z")
-		{
-			$bien->Tipo = "z";
-		}
-		$bien->id = Input::get('id_text');
+				$bien->Nombre = Input::get('nombre_text');
+				$bien->NumeroDeFactura = Input::get('numeroFactura_text');
 
-		$bien->Largo = Input::get('largo_text');
-		$bien->Ancho = Input::get('ancho_text');
-		$bien->Alto = Input::get('alto_text');
-		
-		if(Input::get('uMedida_select') == "mm")
-		{
-			$bien->UdeMedidas = "mm";
-		}
-		else if(Input::get('uMedida_select') == "cm")
-		{
-			$bien->UdeMedidas = "cm";
-		}
-		else if(Input::get('uMedida_select') == "mt")
-		{
-			$bien->UdeMedidas = "mt";
-		}
+				if(Input::get('tipo_select') == "w")
+				{
+					$bien->Tipo = "w";
+				}
+				else if(Input::get('tipo_select') == "x")
+				{
+					$bien->Tipo = "x";
+				}
+				else if(Input::get('tipo_select') == "y")
+				{
+					$bien->Tipo = "y";
+				}
+				else if(Input::get('tipo_select') == "z")
+				{
+					$bien->Tipo = "z";
+				}
+				$bien->id = (Input::get('id_text')+$i);
 
-		$bien->Modelo = Input::get('modelo_text');
-		$bien->NumeroSerie = Input::get('numeroSerie_text');
-		$bien->AñoModelo = Input::get('anoModelo');
-		$bien->Marca = Input::get('marca_text');
+				$bien->Largo = Input::get('largo_text');
+				$bien->Ancho = Input::get('ancho_text');
+				$bien->Alto = Input::get('alto_text');
+				
+				if(Input::get('uMedida_select') == "mm")
+				{
+					$bien->UdeMedidas = "mm";
+				}
+				else if(Input::get('uMedida_select') == "cm")
+				{
+					$bien->UdeMedidas = "cm";
+				}
+				else if(Input::get('uMedida_select') == "mt")
+				{
+					$bien->UdeMedidas = "mt";
+				}
 
-		$bien->Folio = Input::get('folioComprobante_text');
-		$bien->FechaComprobante = Input::get('fechaComprobante_text');
-		$bien->FechaCompra = Input::get('fechaCompra_text');
-		$bien->VidaUtil = Input::get('vidaUtil_text');
-		$bien->NumeroDeUnidades = Input::get('NumUnidades_text');
-		$bien->ValorUnitario = Input::get('valorUnitario_text');
-		$bien->CuentaDeMayor = Input::get('cuentaMayor_text');
-		$bien->ValorTotal = Input::get('valorTotal_text');
-		$bien->save();
-		return View::make('cuerpo.index');
+				$bien->Modelo = Input::get('modelo_text');
+				$bien->NumeroSerie = Input::get('numeroSerie_text');
+				$bien->AnoModelo = Input::get('anoModelo');
+				$bien->Marca = Input::get('marca_text');
+
+				$bien->Folio = Input::get('folioComprobante_text');
+				$bien->FechaComprobante = Input::get('fechaComprobante_text');
+				$bien->FechaCompra = Input::get('fechaCompra_text');
+				$bien->VidaUtil = Input::get('vidaUtil_text');
+
+				$bien->ValorUnitario = Input::get('valorUnitario_text');
+				$bien->CuentaDeMayor = Input::get('cuentaMayor_text');
+				$bien->ValorTotal = Input::get('valorTotal_text');
+				$bien->save();
+			}
+		}
+		else
+		{
+			    $bien = new Bien;
+
+				for($j=1;$j<=4;$j++)
+				{
+					if(Input::get('codigoCentro_select') == "centro de costo ".$j.".")
+						$bien->centrocostos_id = "10000".$j; 
+				}
+
+				$bien->idGrupo = Input::get('grupo_text');
+				$bien->idSubGrupo = Input::get('subGrupo_text');
+				$bien->idTipo = Input::get('tipo_text');
+
+				$bien->Nombre = Input::get('nombre_text');
+				$bien->NumeroDeFactura = Input::get('numeroFactura_text');
+
+				if(Input::get('tipo_select') == "w")
+				{
+					$bien->Tipo = "w";
+				}
+				else if(Input::get('tipo_select') == "x")
+				{
+					$bien->Tipo = "x";
+				}
+				else if(Input::get('tipo_select') == "y")
+				{
+					$bien->Tipo = "y";
+				}
+				else if(Input::get('tipo_select') == "z")
+				{
+					$bien->Tipo = "z";
+				}
+				$bien->id = Input::get('id_text');
+
+				$bien->Largo = Input::get('largo_text');
+				$bien->Ancho = Input::get('ancho_text');
+				$bien->Alto = Input::get('alto_text');
+				
+				if(Input::get('uMedida_select') == "mm")
+				{
+					$bien->UdeMedidas = "mm";
+				}
+				else if(Input::get('uMedida_select') == "cm")
+				{
+					$bien->UdeMedidas = "cm";
+				}
+				else if(Input::get('uMedida_select') == "mt")
+				{
+					$bien->UdeMedidas = "mt";
+				}
+
+				$bien->Modelo = Input::get('modelo_text');
+				$bien->NumeroSerie = Input::get('numeroSerie_text');
+				$bien->AnoModelo = Input::get('anoModelo');
+				$bien->Marca = Input::get('marca_text');
+
+				$bien->Folio = Input::get('folioComprobante_text');
+				$bien->FechaComprobante = Input::get('fechaComprobante_text');
+				$bien->FechaCompra = Input::get('fechaCompra_text');
+				$bien->VidaUtil = Input::get('vidaUtil_text');
+
+				$bien->ValorUnitario = Input::get('valorUnitario_text');
+				$bien->CuentaDeMayor = Input::get('cuentaMayor_text');
+				$bien->ValorTotal = Input::get('valorTotal_text');
+				$bien->save();
+		}
+		//return View::make('cuerpo.index');
 	//}
 	//catch(Exception $e)
 	//{
@@ -232,7 +315,7 @@ Route::post('/bajaBien', function(){
 });
 
 
-Route::post('/login', function()   //para autentificar un login
+Route::post('/logon', function()   //para autentificar un login
 {
 	$usuario = Input::get('usuario');
 	$password = Input::get('pass');
@@ -243,25 +326,115 @@ Route::post('/login', function()   //para autentificar un login
 	}
 	else
 	{
-		return Redirect::to('/')->with('login_errors',true);
+		return Redirect::to('/logon')->with('login_errors',true);
 	}
 });
-
-Route::get('/cuerpo', array('before' => 'auth', function()
+Route::group(array('before' => 'auth'),function()
 {
-	return View::make('cuerpo.index');   //No se ejecutara hasta que no pase la autentificacion
-}));
-Route::get('/altaBien', array('before' => 'auth', function()
-{
-	return View::make('controlBienes.altaBien');   //No se ejecutara hasta que no pase la autentificacion
-}));
-
+	Route::get('/cuerpo',function(){
+		return View::make('cuerpo.index');
+	});
+	Route::get('altaBien',function(){
+		return View::make('controlBienes.altaBien');
+	});
+	Route::get('/bajaBien', function()
+	{
+		$ides = Bien::all();
+		return View::make('controlBienes.bajaBien')->with("ides",$ides);
+	});
+	Route::get('/dependencia', function()
+	{
+		$ides = Bien::all();
+		return View::make('controlBienes.dependencia')->with("ides",$ides);
+	});
+	Route::get('/serial', function()
+	{
+		$ides = Bien::all();
+		return View::make('controlBienes.serial')->with("ides",$ides);
+	});
+	Route::get('/inventory', function()
+	{
+		$bienes = DB::table('centrocostos')->join('bienes','centrocostos.id','=','bienes.centrocostos_id')->get();
+		return View::make('informesConsultas.inventory')->with("bienes",$bienes);
+	});
+	Route::get('/history', function()
+	{
+		$historiales = DB::table('centrocostos')->join('historiales','centrocostos.id','=','historiales.centrocostos_id')->get();
+		return View::make('informesConsultas.history')->with("historiales",$historiales);
+	});
+	Route::get('/bajaHistory', function()
+	{
+		$bajas = DB::table('centrocostos')->join('bajabienes','centrocostos.id','=','bajabienes.centrocostos_id')->get();
+		return View::make('informesConsultas.bajaHistory')->with("bajas",$bajas); 
+	});
+});
 Route::get('logout', function()
 {
 	Auth::logout();
-	return Redirect::to('/');
+	return Redirect::to('/logon');
 });
 
+//seccion portal gets
+
+//importantes
+Route::get('/bienesalta', function()
+{
+	$bienes = Bien::all(array('id'));
+	return View::make('portal.bienesalta')->with("bienes",$bienes);
+});
+
+Route::get('/bienesbaja', function()
+{
+	$bajabienes = Bajabien::all(array('id'));
+	return View::make('portal.bienesbaja')->with("bajabienes",$bajabienes);
+});
+
+Route::get('/centrodecosto', function()
+{
+	$centros = Centrocostos::all(array('id'));
+	//$bienes = Bien::all(array('id','Tipo','NumeroDeFactura','Nombre'));
+	return View::make('portal.centrodecosto')->with("centros",$centros);
+});
+
+Route::get('/bienescosto', function()
+{
+	$historiales = DB::table('centrocostos')->join('historiales','centrocostos.id','=','historiales.centrocostos_id')->get();
+	return View::make('portal.bienescosto')->with("historiales",$historiales);
+});
+
+Route::get('/bienesbajacosto', function()
+{
+	$bajas = DB::table('centrocostos')->join('bajabienes','centrocostos.id','=','bajabienes.centrocostos_id')->get();
+	return View::make('portal.bienesbajacosto')->with("bajas",$bajas);
+});
+
+//fin importantes
+
+
+
+Route::get('/historia', function()
+{
+	return View::make('portal.historia');
+});
+Route::get('/himno', function()
+{
+	return View::make('portal.himno');
+});
+
+Route::get('/contactos', function()
+{
+	return View::make('portal.contactos');
+});
+
+Route::get('/ubicacion', function()
+{
+	return View::make('portal.ubicacion');
+});
+
+Route::get('/mision', function()
+{
+	return View::make('portal.mision');
+});
 
 
 /*
@@ -335,5 +508,5 @@ Route::filter('csrf', function()
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::to('login');
+	if (Auth::guest()) return Redirect::to('logon');
 });

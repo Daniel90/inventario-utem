@@ -123,7 +123,13 @@
       <table width="896" border="0">
         <tr>
           <td width="170"><label>
-            <input type="text" name="ninventario" id="ninventario">
+            <select name = "ninventario">
+              @if($ides)
+                @foreach($ides as $id)       
+                  <option value = '{{$id -> id}}'>{{ $id -> id }}</option>
+                @endforeach
+              @endif
+            </select>
         </tr>
         <tr>
           <td>Nº Inventario</td>

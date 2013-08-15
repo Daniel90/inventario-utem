@@ -7,13 +7,11 @@
         </title>
         <a href = '/index.php/cuerpo'><img src="/img/top_app_logo.png" alt="Universidad Tecnologica Metropolitana" /></a>
         <a href = '/index.php/cuerpo'><img src="/img/top_app_title.png" alt="Mantenedor de Inventario" /></a>
-        {{ HTML::style('css/style.css') }}
-        {{ HTML::style('css/UI Lightness/jquery-ui-1.8.6.custom.css') }}
-        {{ HTML::style('css/ui.jqgrid.css') }}
-        {{ HTML::style('css/bootstrap.css') }}
+    {{ HTML::style('css/style.css') }}
+    {{ HTML::style('css/UI Lightness/jquery-ui-1.8.6.custom.css') }}
+    {{ HTML::style('css/ui.jqgrid.css') }}
+    {{ HTML::style('css/bootstrap.css') }}
         {{ HTML::style('css/bootstrap-responsive.css') }}
-        {{ HTML::style('css/TableTools.css') }}
-        {{ HTML::style('css/TableTool_JUI.css') }}
         <script type="text/javascript">
       var webroot = '/foro/index.blade.php';var wroot = '/Laravel/public/';var jsession_data = [];var theme = "UI Lightness";
     </script>
@@ -24,22 +22,23 @@
     <script type="text/javascript" language="javascript" src="/js/jquery.js"></script>
     <script class="jsbin" src="http://datatables.net/download/build/jquery.dataTables.nightly.js"></script>
       
-        {{ HTML::script('js/jquery-1.4.2.min.js') }} <!--necesario-->
-        {{ HTML::script('js/jquery-ui-1.8.6.custom.min.js') }} <!--necesario-->
-        {{ HTML::script('js/jquery.layout.min.js') }} <!--necesario-->
-        {{ HTML::script('js/jquery.jqGrid.min.js') }} <!--necesario-->
-        {{ HTML::script('js/themeswitchertool.js') }} <!--necesario-->
-        {{ HTML::script('js/layout-default.js') }} 
-        {{ HTML::script('js/jquery.dataTables.js') }}
-        {{ HTML::script('js/jquery.dataTables.min.js') }}
-        {{ HTML::script('js/TableTools.js') }}
-        {{ HTML::script('js/TableTools.min.js') }}
-        {{ HTML::script('js/ZeroClipboard.js') }}
+      {{ HTML::script('js/jquery.Rut.js') }}
+      {{ HTML::script('js/jquery.validate.js') }}
+      {{ HTML::script('js/Utilitarios.js') }}
+      {{ HTML::script('js/jquery.selectboxes.js') }}
+      {{ HTML::script('js/jquery-ui-1.8.6.custom.min.js') }}
+      {{ HTML::script('js/jquery.ui.datepicker-es.js') }}
+      {{ HTML::script('js/jquery.layout.min.js') }}
+      {{ HTML::script('js/i18n/grid.locale-sp.js') }}
+      {{ HTML::script('js/jquery.jqGrid.min.js') }}
+      {{ HTML::script('js/general.js') }}
+      {{ HTML::script('js/themeswitchertool.js') }}
+      {{ HTML::script('js/layout-default.js') }}
       <script>
-       $(document).ready(function() {
+        $(document).ready(function() {
             $('#example').dataTable( {
                 "aaSorting": [[ 1, "desc" ]],
-                "bStateSave": true,
+                
                 "oLanguage": {
                   "sProcessing":     "Procesando...",
                   "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -66,8 +65,6 @@
                 }
             } );
         });
-
-        
         function abre() {
             window.open("/dependencia","dependencia","width=300,height=500, top=100,left=100");
           return true;
@@ -162,14 +159,12 @@
 
         <!--Menu central-->
         <div id="content" class="ui-layout-center">
-               <script>var pfHeaderImgUrl = '';var pfHeaderTagline = '';var pfdisableClickToDel = 0;var pfHideImages = 0;var pfImageDisplayStyle = 'right';var pfDisablePDF = 0;var pfDisableEmail = 0;var pfDisablePrint = 0;var pfCustomCSS = '';var pfBtVersion='1';(function(){var js, pf;pf = document.createElement('script');pf.type = 'text/javascript';if('https:' == document.location.protocol){js='https://pf-cdn.printfriendly.com/ssl/main.js'}else{js='http://cdn.printfriendly.com/printfriendly.js'}pf.src=js;document.getElementsByTagName('head')[0].appendChild(pf)})();</script><a href="http://www.printfriendly.com" style="color:#6D9F00;text-decoration:none;" class="printfriendly" onclick="window.print();return false;" title="Printer Friendly and PDF"><img style="border:none;-webkit-box-shadow:none;box-shadow:none;" src="http://cdn.printfriendly.com/pf-button-both.gif" alt="Print Friendly and PDF"/></a>
+          <script>var pfHeaderImgUrl = '';var pfHeaderTagline = '';var pfdisableClickToDel = 0;var pfHideImages = 0;var pfImageDisplayStyle = 'right';var pfDisablePDF = 0;var pfDisableEmail = 0;var pfDisablePrint = 0;var pfCustomCSS = '';var pfBtVersion='1';(function(){var js, pf;pf = document.createElement('script');pf.type = 'text/javascript';if('https:' == document.location.protocol){js='https://pf-cdn.printfriendly.com/ssl/main.js'}else{js='http://cdn.printfriendly.com/printfriendly.js'}pf.src=js;document.getElementsByTagName('head')[0].appendChild(pf)})();</script><a href="http://www.printfriendly.com" style="color:#6D9F00;text-decoration:none;" class="printfriendly" onclick="window.print();return false;" title="Printer Friendly and PDF"><img style="border:none;-webkit-box-shadow:none;box-shadow:none;" src="http://cdn.printfriendly.com/pf-button-both.gif" alt="Print Friendly and PDF"/></a>
 
           <div id="container">
-                        <h3 class="text-info" style="text-align:center;">Bienes del inventario</h3>
-
+            <h3 class="text-info" style="text-align:center;">Bienes dados de baja</h3>
       <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
         <!-- Cabecera -->
-
         <thead>
           <tr>
             <th>Centro de costo</th>
@@ -181,25 +176,23 @@
             <th>Encargado</th>
             <th>Departamento</th>
             <th>Sede</th>
-            <th>Año modelo</th>
           </tr>
         </thead>
         <!-- Cuerpo -->
         
         <tbody>
-          @if($bienes)
-            @foreach($bienes as $bien)
+          @if($bajas)
+            @foreach($bajas as $baja)
               <tr class="gradeA">
-                <td class="center">{{ $bien -> centrocostos_id }}</td>  
-                <td class="center">{{ $bien -> tipo }}</td>
-                <td class="center">{{ $bien -> id }}</td>
-                <td class="center">{{ $bien -> numeroserie }}</td>
-                <td class="center">{{ $bien -> numerodefactura }}</td>
-                <td class="center">{{ $bien -> nombre }}</td>
-                <td class="center">{{ $bien -> encargado }}</td>
-                <td class="center">{{ $bien -> departamento }}</td>
-                <td class="center">{{ $bien -> sede }}</td>
-                <td class="center">{{ $bien -> anomodelo }}</td>
+                <td class="center">{{ $baja -> centrocostos_id }}</td>  
+                <td class="center">{{ $baja -> tipo }}</td>
+                <td class="center">{{ $baja -> id }}</td>
+                <td class="center">{{ $baja -> numeroserie }}</td>
+                <td class="center">{{ $baja -> numerodefactura }}</td>
+                <td class="center">{{ $baja -> nombre }}</td>
+                <td class="center">{{ $baja -> encargado }}</td>
+                <td class="center">{{ $baja -> departamento }}</td>
+                <td class="center">{{ $baja -> sede }}</td>
               </tr>
             @endforeach
           @endif   
@@ -215,7 +208,6 @@
             <th>Encargado</th>
             <th>Departamento</th>
             <th>Sede</th>
-            <th>Año modelo</th>
           </tr>
         </tfoot>
       </table>

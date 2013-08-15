@@ -8,9 +8,9 @@
         <a href = '/index.php/cuerpo'><img src="/img/top_app_logo.png" alt="Universidad Tecnologica Metropolitana" /></a>
         <a href = '/index.php/cuerpo'><img src="/img/top_app_title.png" alt="Mantenedor de Inventario" /></a>
     		{{ HTML::style('css/style.css') }}
-    		{{ HTML::style('css/UI Lightness/jquery-ui-1.8.6.custom.css') }}
-    		{{ HTML::style('css/ui.jqgrid.css') }}
-    		{{ HTML::style('css/bootstrap.css') }}
+        {{ HTML::style('css/UI Lightness/jquery-ui-1.8.6.custom.css') }}
+        {{ HTML::style('css/ui.jqgrid.css') }}
+        {{ HTML::style('css/bootstrap.css') }}
         {{ HTML::style('css/bootstrap-responsive.css') }}
         {{ HTML::style('css/jscal2.css') }}
         {{ HTML::style('css/border-radius.css') }}
@@ -29,6 +29,25 @@
               }
 
             }
+
+            function abre() {
+              window.open("/dependencia","dependencia","width=300,height=500, top=100,left=100");
+              return true;
+            }
+
+            function abreS() {
+              window.open("/serial","serial","width=300,height=500, top=100,left=100");
+            return true;
+            }
+
+             function isNumberKey(evt)
+             {
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                  return false;
+                return true;
+             }
+          
 		    </script>
     	{{ HTML::script('js/jquery-1.4.2.min.js') }}
     	{{ HTML::script('js/jquery-ui-1.8.6.custom.min.js') }}
@@ -39,8 +58,7 @@
     	{{ HTML::script('js/themeswitchertool.js') }}
     	{{ HTML::script('js/layout-default.js') }}
       {{ HTML::script('js/jscal2.js') }}
-      {{ HTML::script('js/lang/es.js') }}
-    </head>
+      {{ HTML::script('js/lang/es.js') }}    
     <body>
     	<!--Cabecera de la pagina-->
     	<header class="ui-layout-north">
@@ -75,9 +93,15 @@
         					<li>
           						{{ HTML::link('/altaBien','Alta de Bienes') }}
         					</li>
-        					<li style="border-bottom: none;padding-bottom:0px;">
+        					<li>
           						{{ HTML::link('/bajaBien','Baja de bienes') }}
         					</li>
+                  <li>
+                    {{ HTML::link('/inventory','Cambiar dependencias',array('onclick' => 'abre()')) }}
+                </li>
+                <li>
+                  {{ HTML::link('/inventory','Actualizar serial',array('onclick' => 'abreS()')) }}<!--simil-->
+                </li>
       					</ul>
     				</div>
   				</div>
@@ -91,6 +115,10 @@
         					<li>
           						{{ HTML::link('/inventory','Consultar bienes de inventario') }}
         					</li>
+                  <li>
+                    {{ HTML::link('/history','Consultar historiales') }}
+                </li>
+                {{ HTML::link('/history','Consultar bienes dados de baja') }}
         				</ul>
       				</div>
       			</div>
@@ -138,11 +166,11 @@
       			</br>
       			
       			<h4>Identificación del bien</h4>
-      			{{ Form::text('grupo_text','',array('style' => 'width:40px;','placeholder' => 'Grupo')) }}
+      			{{ Form::text('grupo_text','',array('onkeypress' => 'return isNumberKey(event)','id' => 'grupo','style' => 'width:40px;','placeholder' => 'Grupo','maxlength' => '4')) }}
       			/
-      			{{ Form::text('subGrupo_text','',array('style' => 'width:40px;','placeholder' => 'S-G')) }}
+      			{{ Form::text('subGrupo_text','',array('onkeypress' => 'return isNumberKey(event)','style' => 'width:40px;','placeholder' => 'S-G','maxlength' => '4')) }}
       			/
-      			{{ Form::text('tipo_text','',array('style' => 'width:40px;','placeholder' => 'Tipo')) }}
+      			{{ Form::text('tipo_text','',array('onkeypress' => 'return isNumberKey(event)','style' => 'width:40px;','placeholder' => 'Tipo','maxlength' => '4')) }}
       			{{ Form::text('nombre_text','',array('style' => 'width:675px;margin-left:20px;','placeholder' => 'Nombre')) }}</br>
       			<ul class="inline">
       				<li>Grupo</li>
@@ -153,13 +181,13 @@
       				<li style="margin-left:15px;">Nombre</li>
       			</ul>
       			</br>
-      			{{ Form::text('numeroFactura_text','',array('class' => 'input-small','placeholder' => 'N° de factura','required')) }}
+      			{{ Form::text('numeroFactura_text','',array('onkeypress' => 'return isNumberKey(event)','class' => 'input-small','placeholder' => 'N° de factura','required')) }}
       			{{ Form::select('tipo_select', array('w' => 'w','x' => 'x','y' => 'y','z' => 'z'),'w',array('style' => 'width:50px;margin-left:25px;' )) }}
       			-
-      			{{ Form::text('id_text','',array('class' => 'input-small','placeholder' => 'Asignación','required')) }}
-      			{{ Form::text('largo_text','',array('class' => 'input-small','placeholder' => 'Largo','style' => 'margin-left:25px;')) }}
-      			{{ Form::text('ancho_text','',array('class' => 'input-small','placeholder' => 'Ancho')) }}
-      			{{ Form::text('alto_text','',array('class' => 'input-small','placeholder' => 'Alto')) }}
+      			{{ Form::text('id_text','',array('onkeypress' => 'return isNumberKey(event)','class' => 'input-small','placeholder' => 'Asignación','required')) }}
+      			{{ Form::text('largo_text','',array('onkeypress' => 'return isNumberKey(event)','class' => 'input-small','placeholder' => 'Largo','style' => 'margin-left:25px;','maxlength' => '3')) }}
+      			{{ Form::text('ancho_text','',array('onkeypress' => 'return isNumberKey(event)','class' => 'input-small','placeholder' => 'Ancho','maxlength' => '3')) }}
+      			{{ Form::text('alto_text','',array('onkeypress' => 'return isNumberKey(event)','class' => 'input-small','placeholder' => 'Alto','maxlength' => '3')) }}
       			{{ Form::select('uMedida_select',array('mm' => 'milimetros','cm' => 'centimetros', 'mt' => 'metros'),'metros',array('style' => 'margin-left:25px;')) }}
 
             <ul class="inline">
@@ -173,7 +201,7 @@
             </br>
             <h4>Características del bien</h4>
       			{{ Form::text('modelo_text','',array('placeholder' => 'Modelo')) }}
-            {{ Form::text('numeroSerie_text','',array('placeholder' => 'N° de serie','style' => 'margin-left: 30px;')) }}
+            {{ Form::text('numeroSerie_text','',array('onkeypress' => 'return isNumberKey(event)','placeholder' => 'N° de serie','style' => 'margin-left: 30px;')) }}
             <select name = "anoModelo" style="width:100px; margin-left:30px;">
                 @for($i=1950;$i<=2013;$i++)
                 {
@@ -186,7 +214,7 @@
             {{ Form::text('marca_text','',array('placeholder' => 'Marca','style' => 'margin-left:30px;width:250px')) }}
             <ul class="inline">
               <li>Modelo</li>
-              <li style="margin-left: 200px;">Número de serie(*)</li>
+              <li style="margin-left: 200px;">Número de serie</li>
               <li style="margin-left: 110px;" >Año modelo</li>
               <li style="margin-left: 50px;">Marca</li>
             </ul>
@@ -226,8 +254,8 @@
                        }
                });
           </script>
-          {{ Form::text('vidaUtil_text','',array('style' => 'margin-left:30px;width:20px;','maxlength' => '2')) }} Años
-          {{ Form::text('NumUnidades_text','',array('placeholder' => 'N° de unidades','style' => 'margin-left:30px;width:100px;')) }}
+          {{ Form::text('vidaUtil_text','',array('onkeypress' => 'return isNumberKey(event)','style' => 'margin-left:30px;width:20px;','maxlength' => '2')) }} Años
+          {{ Form::text('NumUnidades_text','',array('onkeypress' => 'return isNumberKey(event)','placeholder' => 'N° de unidades','style' => 'margin-left:30px;width:100px;','required')) }}
           <ul class="inline">
               <li>Folio Comprobante</li>
               <li style="margin-left: 100px;">Fecha comprobante</li>
@@ -236,9 +264,9 @@
               <li style="margin-left: 45px;">N° de unidades</li>
           </ul>
         </br>
-          {{ Form::text('valorUnitario_text','',array('placeholder' => 'valor unitario')) }} pesos
-          {{ Form::text('cuentaMayor_text','',array('placeholder' => 'Cuenta de mayor','style' => 'margin-left:30px;')) }} 
-          {{ Form::text('valorTotal_text','',array('placeholder' => 'Valor total','style' => 'margin-left:30px;')) }} pesos
+          {{ Form::text('valorUnitario_text','',array('onkeypress' => 'return isNumberKey(event)','placeholder' => 'valor unitario')) }} pesos
+          {{ Form::text('cuentaMayor_text','',array('onkeypress' => 'return isNumberKey(event)','placeholder' => 'Cuenta de mayor','style' => 'margin-left:30px;')) }} 
+          {{ Form::text('valorTotal_text','',array('onkeypress' => 'return isNumberKey(event)','placeholder' => 'Valor total','style' => 'margin-left:30px;')) }} pesos
           <ul class="inline">
               <li>Valor unitario</li>
               <li style="margin-left: 200px;">Cuenta de mayor</li>

@@ -1,10 +1,9 @@
-
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <title>
-               Universidad Tecnologica Metropolitana - Mantenedor de Inventario 
+               Universidad Tecnologica Metropolitana - Mantenedor de Inventario
         </title>
         <link href="/img/favicon.ico" type="image/x-icon" rel="icon" />
         <link href="/img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
@@ -15,16 +14,29 @@
         <script type="text/javascript">
           var webroot = '/cuerpo/index.blade.php';var wroot = '/Laravel/public/';var jsession_data = [];var theme = "UI Lightness";
           function abre() {
-            window.open("/dependencia","dependencia","width=300,height=500, top=100,left=100");
-          return true;
-        }
+              window.open("/dependencia","dependencia","width=300,height=500, top=100,left=100");
+            return true;
+          }
+          function abreS() {
+              window.open("/serial","serial","width=300,height=500, top=100,left=100");
+            return true;
+          }
+
+          $(document).ready(function() {
+           $('#inventario').click(function(){
+            $("#content").load('informesConsultas/inventory.blade.php');
+             });
+          });
         </script>
-        {{ HTML::script('js/jquery-1.4.2.min.js') }}  <!--necesario-->
+
+        {{ HTML::script('js/jquery-1.4.2.min.js') }} <!--necesario-->
         {{ HTML::script('js/jquery-ui-1.8.6.custom.min.js') }} <!--necesario-->
         {{ HTML::script('js/jquery.layout.min.js') }} <!--necesario-->
         {{ HTML::script('js/jquery.jqGrid.min.js') }} <!--necesario-->
         {{ HTML::script('js/themeswitchertool.js') }} <!--necesario-->
-        {{ HTML::script('js/layout-default.js') }}   <!--necesario-->
+        {{ HTML::script('js/layout-default.js') }} <!--necesario-->
+
+        
     </head>
 
     <body>
@@ -37,7 +49,7 @@
         <div id="version">V1.1</div>
         <div id="top-menu">
           <a href="/index.php/cuerpo" rel="ui-icon-home">Inicio</a>
-          {{ HTML::link('logout','Salir',array('rel' => 'ui-icon-home')) }}   
+          {{ HTML::link('logout','Salir',array('rel' => 'ui-icon-home')) }}
         </div>
         <div id="current-user">
           Te has identificado como: {{ Auth::user()->usuario }}
@@ -57,13 +69,16 @@
             <div class="submenu">
               <ul>
                 <li>
-                  {{ HTML::link('/altaBien','Alta de Bienes') }}
+                  {{ HTML::link('altaBien','Alta de Bienes',array('id' => 'alta')) }}
                 </li>
                 <li>
-                  {{ HTML::link('/bajaBien','Baja de bienes') }}
+                  {{ HTML::link('/bajaBien','Baja de bienes',array('id' => 'baja')) }}
                 </li>
                 <li>
-                  {{ HTML::link('/cuerpo','Cambiar dependencias',array('onclick' => 'abre()')) }}
+                  {{ HTML::link('/inventory','Cambiar dependencias',array('onclick' => 'abre()')) }}<!--pata poder ver el contenido de la base de datos-->
+                </li>
+                <li>
+                  {{ HTML::link('/inventory','Actualizar serial',array('onclick' => 'abreS()')) }}<!--simil-->
                 </li>
               </ul>
             </div>
@@ -76,10 +91,13 @@
             <div class="submenu">
               <ul>
                 <li>
-                  {{ HTML::link('/inventory','Consultar bienes de inventario') }}
+                  {{ HTML::link('/inventory','Consultar bienes de inventario',array('id' => 'inventario')) }}
                 </li>
                 <li>
                   {{ HTML::link('/history','Consultar historiales') }}
+                </li>
+                <li>
+                  {{ HTML::link('/bajaHistory','Consultar bienes dados de baja') }}
                 </li>
               </ul>
             </div>
