@@ -7,11 +7,13 @@
         </title>
         <a href = '/index.php/cuerpo'><img src="/img/top_app_logo.png" alt="Universidad Tecnologica Metropolitana" /></a>
         <a href = '/index.php/cuerpo'><img src="/img/top_app_title.png" alt="Mantenedor de Inventario" /></a>
-    {{ HTML::style('css/style.css') }}
-    {{ HTML::style('css/UI Lightness/jquery-ui-1.8.6.custom.css') }}
-    {{ HTML::style('css/ui.jqgrid.css') }}
-    {{ HTML::style('css/bootstrap.css') }}
+        {{ HTML::style('css/style.css') }}
+        {{ HTML::style('css/UI Lightness/jquery-ui-1.8.6.custom.css') }}
+        {{ HTML::style('css/ui.jqgrid.css') }}
+        {{ HTML::style('css/bootstrap.css') }}
         {{ HTML::style('css/bootstrap-responsive.css') }}
+        {{ HTML::style('css/TableTools.css') }}
+        {{ HTML::style('css/TableTool_JUI.css') }}
         <script type="text/javascript">
       var webroot = '/foro/index.blade.php';var wroot = '/Laravel/public/';var jsession_data = [];var theme = "UI Lightness";
     </script>
@@ -22,25 +24,59 @@
     <script type="text/javascript" language="javascript" src="/js/jquery.js"></script>
     <script class="jsbin" src="http://datatables.net/download/build/jquery.dataTables.nightly.js"></script>
       
-      {{ HTML::script('js/jquery.Rut.js') }}
-      {{ HTML::script('js/jquery.validate.js') }}
-      {{ HTML::script('js/Utilitarios.js') }}
-      {{ HTML::script('js/jquery.selectboxes.js') }}
-      {{ HTML::script('js/jquery-ui-1.8.6.custom.min.js') }}
-      {{ HTML::script('js/jquery.ui.datepicker-es.js') }}
-      {{ HTML::script('js/jquery.layout.min.js') }}
-      {{ HTML::script('js/i18n/grid.locale-sp.js') }}
-      {{ HTML::script('js/jquery.jqGrid.min.js') }}
-      {{ HTML::script('js/general.js') }}
-      {{ HTML::script('js/themeswitchertool.js') }}
-      {{ HTML::script('js/layout-default.js') }}
+        {{ HTML::script('js/jquery-1.4.2.min.js') }} <!--necesario-->
+        {{ HTML::script('js/jquery-ui-1.8.6.custom.min.js') }} <!--necesario-->
+        {{ HTML::script('js/jquery.layout.min.js') }} <!--necesario-->
+        {{ HTML::script('js/jquery.jqGrid.min.js') }} <!--necesario-->
+        {{ HTML::script('js/themeswitchertool.js') }} <!--necesario-->
+        {{ HTML::script('js/layout-default.js') }} 
+        {{ HTML::script('js/jquery.dataTables.js') }}
+        {{ HTML::script('js/jquery.dataTables.min.js') }}
+        {{ HTML::script('js/TableTools.js') }}
+        {{ HTML::script('js/TableTools.min.js') }}
+        {{ HTML::script('js/ZeroClipboard.js') }}
       <script>
-    $(document).ready(function() {
-    $('#example').dataTable( {
-        "aaSorting": [[ 1, "desc" ]],
-        "sPaginationType": "full_numbers"
-    } );
-} );
+       $(document).ready(function() {
+            $('#example').dataTable( {
+                "aaSorting": [[ 1, "desc" ]],
+                "bStateSave": true,
+                "oLanguage": {
+                  "sProcessing":     "Procesando...",
+                  "sLengthMenu":     "Mostrar _MENU_ registros",
+                  "sZeroRecords":    "No se encontraron resultados",
+                  "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                  "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                  "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                  "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                  "sInfoPostFix":    "",
+                  "sSearch":         "Buscar:",
+                  "sUrl":            "",
+                  "sInfoThousands":  ",",
+                  "sLoadingRecords": "Cargando...",
+                  "oPaginate": {
+                      "sFirst":    "Primero",
+                      "sLast":     "Último",
+                      "sNext":     "Siguiente",
+                      "sPrevious": "Anterior"
+                  },
+                  "oAria": {
+                      "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            } );
+        });
+
+        
+        function abre() {
+            window.open("/dependencia","dependencia","width=300,height=500, top=100,left=100");
+          return true;
+        }
+        function abreS() {
+              window.open("/serial","serial","width=300,height=500, top=100,left=100");
+            return true;
+          }
+       
     </script>
     </head>
     <body>
@@ -78,9 +114,15 @@
                   <li>
                       {{ HTML::link('/altaBien','Alta de Bienes') }}
                   </li>
-                  <li style="border-bottom: none;padding-bottom:0px;">
+                  <li>
                       {{ HTML::link('/bajaBien','Baja de bienes') }}
                   </li>
+                  <li>
+                    {{ HTML::link('/inventory','Cambiar dependencias',array('onclick' => 'abre()')) }}
+                </li>
+                <li>
+                  {{ HTML::link('/inventory','Actualizar serial',array('onclick' => 'abreS()')) }}<!--simil-->
+                </li>
                 </ul>
             </div>
           </div>
@@ -94,6 +136,10 @@
                   <li>
                       {{ HTML::link('/inventory','Consultar bienes de inventario') }}
                   </li>
+                  <li>
+                    {{ HTML::link('/history','Consultar historiales') }}
+                </li>
+                {{ HTML::link('/bajaHistory','Consultar bienes dados de baja') }}
                 </ul>
               </div>
             </div>
@@ -116,32 +162,44 @@
 
         <!--Menu central-->
         <div id="content" class="ui-layout-center">
+               <script>var pfHeaderImgUrl = '';var pfHeaderTagline = '';var pfdisableClickToDel = 0;var pfHideImages = 0;var pfImageDisplayStyle = 'right';var pfDisablePDF = 0;var pfDisableEmail = 0;var pfDisablePrint = 0;var pfCustomCSS = '';var pfBtVersion='1';(function(){var js, pf;pf = document.createElement('script');pf.type = 'text/javascript';if('https:' == document.location.protocol){js='https://pf-cdn.printfriendly.com/ssl/main.js'}else{js='http://cdn.printfriendly.com/printfriendly.js'}pf.src=js;document.getElementsByTagName('head')[0].appendChild(pf)})();</script><a href="http://www.printfriendly.com" style="color:#6D9F00;text-decoration:none;" class="printfriendly" onclick="window.print();return false;" title="Printer Friendly and PDF"><img style="border:none;-webkit-box-shadow:none;box-shadow:none;" src="http://cdn.printfriendly.com/pf-button-both.gif" alt="Print Friendly and PDF"/></a>
 
           <div id="container">
+                        <h3 class="text-info" style="text-align:center;">Bienes del inventario</h3>
+
       <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
         <!-- Cabecera -->
+
         <thead>
           <tr>
             <th>Centro de costo</th>
-            <th>encargado</th> 
-            <th>departamento</th>
-            <th>sede</th>
-            <th>teléfono</th>
-           <!-- <th>updated_at</th>-->
+            <th>Tipo de bien</th>
+            <th>ID del bien</th>
+            <th>Número de serie</th>
+            <th>Número de factura</th>
+            <th>Nombre del bien</th>
+            <th>Encargado</th>
+            <th>Departamento</th>
+            <th>Sede</th>
+            <th>Año modelo</th>
           </tr>
         </thead>
         <!-- Cuerpo -->
         
         <tbody>
-          @if($admins)
-            @foreach($admins as $admin)
+          @if($bienes)
+            @foreach($bienes as $bien)
               <tr class="gradeA">
-                <td class="center">{{ $admin -> id }}</td>  
-                <td class="center">{{ $admin -> encargado }}</td>
-                <td class="center">{{ $admin -> departamento }}</td>
-                <td class="center">{{ $admin -> sede }}</td>
-                <td class="center">{{ $admin -> telefono }}</td>
-                <!--<td class="center">{{ $admin -> updated_at }}</td>-->
+                <td class="center">{{ $bien -> centrocostos_id }}</td>  
+                <td class="center">{{ $bien -> tipo }}</td>
+                <td class="center">{{ $bien -> id }}</td>
+                <td class="center">{{ $bien -> numeroserie }}</td>
+                <td class="center">{{ $bien -> numerodefactura }}</td>
+                <td class="center">{{ $bien -> nombre }}</td>
+                <td class="center">{{ $bien -> encargado }}</td>
+                <td class="center">{{ $bien -> departamento }}</td>
+                <td class="center">{{ $bien -> sede }}</td>
+                <td class="center">{{ $bien -> anomodelo }}</td>
               </tr>
             @endforeach
           @endif   
@@ -149,17 +207,24 @@
         <tfoot>
           <tr>
             <th>Centro de costo</th>
-            <th>encargado</th> 
-            <th>departamento</th>
-            <th>sede</th>
-            <th>teléfono</th>
-            <!--<th>updated_at</th>-->
+            <th>Tipo de bien</th>
+            <th>ID del bien</th>
+            <th>Número de serie</th>
+            <th>Número de factura</th>
+            <th>Nombre del bien</th>
+            <th>Encargado</th>
+            <th>Departamento</th>
+            <th>Sede</th>
+            <th>Año modelo</th>
           </tr>
         </tfoot>
       </table>
 
     </div>
+
               
+            
+
         </div>
         
     </div>
