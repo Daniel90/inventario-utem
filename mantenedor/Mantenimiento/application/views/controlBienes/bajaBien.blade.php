@@ -117,7 +117,7 @@
                   <li>
                     {{ HTML::link('/history','Consultar historiales') }}
                   </li>
-                  {{ HTML::link('/history','Consultar bienes dados de baja') }}
+                {{ HTML::link('/bajaHistory','Consultar bienes dados de baja') }}
                 </ul>
               </div>
             </div>
@@ -127,9 +127,12 @@
               </h3>
               <div class="submenu">
                 <ul>
-                    <li style="border-bottom: none;padding-bottom:0px;">
-                      <a href="/*">...</a>
-                    </li>
+                    <li>
+                    {{ HTML::link('/contactos','Contactos') }}
+                  </li>
+                  <li>
+                  {{ HTML::link('/ubicacion','Ubicación') }}
+                </li>
                 </ul>
               </div>
             </div>
