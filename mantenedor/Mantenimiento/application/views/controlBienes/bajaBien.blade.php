@@ -7,14 +7,45 @@
         </title>
         <a href = '/index.php/cuerpo'><img src="/img/top_app_logo.png" alt="Universidad Tecnologica Metropolitana" /></a>
         <a href = '/index.php/cuerpo'><img src="/img/top_app_title.png" alt="Mantenedor de Inventario" /></a>
-    {{ HTML::style('css/style.css') }}
-    {{ HTML::style('css/UI Lightness/jquery-ui-1.8.6.custom.css') }}
-    {{ HTML::style('css/ui.jqgrid.css') }}
-    {{ HTML::style('css/bootstrap.css') }}
+        {{ HTML::style('css/style.css') }}
+        {{ HTML::style('css/UI Lightness/jquery-ui-1.8.6.custom.css') }}
+        {{ HTML::style('css/ui.jqgrid.css') }}
+        {{ HTML::style('css/bootstrap.css') }}
         {{ HTML::style('css/bootstrap-responsive.css') }}
+        {{ HTML::style('css/jscal2.css') }}
+        {{ HTML::style('css/border-radius.css') }}
+        {{ HTML::style('css/steel/steel.css') }}
         <script type="text/javascript">
-      var webroot = '/cuerpo/index.blade.php';var wroot = '/Laravel/public/';var jsession_data = [];var theme = "UI Lightness";
+          var webroot = '/cuerpo/index.blade.php';var wroot = '/Laravel/public/';var jsession_data = [];var theme = "UI Lightness";
+          function abre() {
+              window.open("/dependencia","dependencia","width=300,height=500, top=100,left=100");
+              return true;
+            }
+            function pregunta()
+           {
+              if (confirm('¿Esta seguro que desea dar de baja este bien?')){
+                document.bajaBien.submit();
+              }
+
+            }
+            function abreS() {
+              window.open("/serial","serial","width=300,height=500, top=100,left=100");
+            return true;
+          }
+          function isNumberKey(evt)
+             {
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                  return false;
+                return true;
+             }
+              function formReset()
+           {
+              document.getElementById("bajaBien").reset();
+           }
+          
     </script>
+    
       {{ HTML::script('js/jquery-1.4.2.min.js') }}
       {{ HTML::script('js/jquery-ui-1.8.6.custom.min.js') }}
       {{ HTML::script('js/jquery.layout.min.js') }}
@@ -27,6 +58,7 @@
       {{ HTML::script('js/lang/es.js') }}
     </head>
     <body>
+
       <!--Cabecera de la pagina-->
       <header class="ui-layout-north">
             <h1>
@@ -60,9 +92,15 @@
                   <li>
                       {{ HTML::link('/altaBien','Alta de Bienes') }}
                   </li>
-                  <li style="border-bottom: none;padding-bottom:0px;">
+                  <li>
                       {{ HTML::link('/terminate','Baja de bienes') }}
                   </li>
+                  <li>
+                    {{ HTML::link('/inventory','Cambiar dependencias',array('onclick' => 'abre()')) }}
+                </li>
+                <li>
+                  {{ HTML::link('/inventory','Actualizar serial',array('onclick' => 'abreS()')) }}<!--simil-->
+                </li>
                 </ul>
             </div>
           </div>
@@ -76,6 +114,10 @@
                   <li>
                       {{ HTML::link('/inventory','Consultar bienes de inventario') }}
                   </li>
+                  <li>
+                    {{ HTML::link('/history','Consultar historiales') }}
+                  </li>
+                  {{ HTML::link('/history','Consultar bienes dados de baja') }}
                 </ul>
               </div>
             </div>
@@ -116,13 +158,14 @@
 
           
 
-    <form name="form1" method="post" action="" style="margin-left:50px;margin-right:50px">
+    <form id = "bajaBien" name="form1" method="post" action="" style="margin-left:50px;margin-right:50px">
       
     
       <h4>Identificación del bien</h4>
       <table width="896" border="0">
         <tr>
           <td width="170"><label>
+            <!--<input type="text" name="ninventario" id="ninventario">-->
             <select name = "ninventario">
               @if($ides)
                 @foreach($ides as $id)       
@@ -139,24 +182,61 @@
       <h4>Antecedentes de la baja</h4>
       <table width="870" border="0">
         <tr>
+          <td width="144">
+            <label>
+              <input type="text" name="ndocumento" id="ndocumento" onkeypress = "return isNumberKey(event)">
+            </label>
+          </td>
+          <td width="144">
+            <label>
+              <!--<input type="text" name="fechadocumento" id="f_rangeStart" OnFocus = "this.blur()" 'invalid'>-->
+              {{ Form::text('fechadocumento','',array('id' => 'f_rangeStart','OnFocus' => 'this.blur()','required')) }}
+
+              
+            </label>
+          </td>
+          
           <td width="144"><label>
-            <input type="text" name="ndocumento" id="ndocumento">
-          </label></td>
-          <td width="144"><label>
-            <input type="text" name="fechadocumento" id="fechadocumento">
-          </label></td>
-          <td width="144"><label>
+
             <input type="text" name="decretobaja" id="decretobaja">
           </label></td>
           <td width="420"><label>
-            <input type="text" name="fechadecreto" id="fechadecreto">
+            <input type="text" name="fechadecreto" id="f_rangeStart2" OnFocus = "this.blur()" required>
           </label></td>
         </tr>
         <tr>
           <td>Nº Documento </td>
-          <td>Fecha Documento</td>
+          <td>Fecha Documento <button id="f_rangeStart_trigger" class="btn btn-mini">...</button></td>
+          <script>
+                RANGE_CAL_1 = new Calendar({
+                               inputField: "f_rangeStart",
+                               dateFormat: "%d/%m/%Y",
+                               trigger: "f_rangeStart_trigger",
+                               bottomBar: false,
+                               onSelect: function() {
+                                       var date = Calendar.intToDate(this.selection.get());
+                                       LEFT_CAL.args.min = date;
+                                       LEFT_CAL.redraw();
+                                       this.hide();
+                               }
+                       });
+              </script>
           <td>Decreto Baja</td>
-          <td>Fecha Decreto </td>
+          <td>Fecha Decreto<button id="f_rangeStart_trigger2" class="btn btn-mini">...</button> </td>
+          <script>
+                RANGE_CAL_1 = new Calendar({
+                               inputField: "f_rangeStart2",
+                               dateFormat: "%d/%m/%Y",
+                               trigger: "f_rangeStart_trigger2",
+                               bottomBar: false,
+                               onSelect: function() {
+                                       var date = Calendar.intToDate(this.selection.get());
+                                       LEFT_CAL.args.min = date;
+                                       LEFT_CAL.redraw();
+                                       this.hide();
+                               }
+                       });
+              </script>
         </tr>
       
 
@@ -203,7 +283,7 @@
       <table width="300" border="0">
         <tr>
           <td><label>
-            <input type="text" name="valoractualdelbien" id="valoractualdelbien">
+            <input type="text" name="valoractualdelbien" id="valoractualdelbien" onkeypress = "return isNumberKey(event)">
           </label></td>
         </tr>
         <tr>
@@ -213,10 +293,10 @@
       <table width="300" border="0">
         <tr>
           <td><label>
-            <input type="text" name="depreciacion" id="depreciacion">
+            <input type="text" name="depreciacion" id="depreciacion" onkeypress = "return isNumberKey(event)">
           </label></td>
           <td><label>
-            <input type="text" name="valordelabaja" id="valordelabaja">
+            <input type="text" name="valordelabaja" id="valordelabaja" onkeypress = "return isNumberKey(event)">
           </label></td>
         </tr>
         <tr>
@@ -234,22 +314,16 @@
       <p>&nbsp;</p>
       <p><br>
     </p>
-    <input type="submit" value = "aceptar">
+    <input type = "submit" value = "Dar de baja el bien" class = "btn btn-large btn-primary" onclick = "pregunta()">
+    <input class="btn btn-large btn-info" type="button" onclick="formReset()" value="Limpiar">
     </form>
+    
 <p>&nbsp;</p>
 
       
       
-          
-      
       </div>
     </div>
-
-
-
-
-
-
     <footer class="ui-layout-south"></footer>
     </body>
 
