@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>
-               Universidad Tecnologica Metropolitana - Sistema de Inventario 
+               Universidad Tecnologica Metropolitana - Mantenedor de Inventario 
         </title>
         <link href="/img/favicon.ico" type="image/x-icon" rel="icon" />
     <link href="/img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
@@ -14,10 +14,10 @@
    
     {{ HTML::style('css/ui.jqgrid.css') }}
     {{ HTML::style('css/bootstrap.css') }}
-        {{ HTML::style('css/bootstrap-responsive.css') }}
+    {{ HTML::style('css/bootstrap-responsive.css') }}
         
-        <script type="text/javascript">
-      var webroot = '/home/index.blade.php';var wroot = '/Laravel/public/';var jsession_data = [];var theme = "UI Lightness";
+    <script type="text/javascript">
+      var webroot = '/foro/index.blade.php';var wroot = '/Laravel/public/';var jsession_data = [];var theme = "UI Lightness";
     </script>
       {{ HTML::script('js/jquery-1.4.2.min.js') }}
       {{ HTML::script('js/jquery.Rut.js') }}
@@ -93,7 +93,8 @@ body {
       <header class="ui-layout-north">
             <h1>
                 <img src="/img/utem_estado_de_chile" alt="Universidad Tecnologica Metropolitana" />
-               
+               <!-- <img src="/img/top_app_logo.png" alt="Universidad Tecnologica Metropolitana" />
+                <img src="/img/top_app_title1.png" alt="Mantenedor de Inventario" />  -->
             </h1>
             
              <!--<div id="version">V1.1</div>-->
@@ -101,7 +102,7 @@ body {
       <div id="top-menu">
           <a href="/" rel="ui-icon-home">Inicio</a>
               
-              {{ HTML::link('/logon','Admin',array('rel' => 'forward_enabled_hover')) }}   
+              {{ HTML::link('/logon','Admin',array('rel' => 'ui-icon-home')) }}   
       </div>
       
       
@@ -138,8 +139,6 @@ body {
                 </ul>
             </div>
           </div>
-          <!--Seccion Informes y consultas a la BD-->
-         <!--Seccion Informes y consultas a la BD-->
         <div>
             <h3>
                 <a href="#" rel="4" >Mantenedor</a>
@@ -157,6 +156,14 @@ body {
                  <li>
                       {{ HTML::link('/centrodecosto','Centro de Costo') }}
                   </li>
+                  
+                  <li>
+                      {{ HTML::link('/bienescosto','Bienes de Centro de Costo') }}
+                  </li>
+                  
+                  <li>
+                      {{ HTML::link('/bienesbajacosto','Bienes en Baja en Centro de Costo') }}
+                  </li>
                 </ul>
               </div>
             </div>
@@ -171,20 +178,40 @@ body {
                     {{ HTML::link('/contactos','Contactos') }}
                   </li>
                   <li>
-                    {{ HTML::link('/ubicacion','Ubicacion') }}
-                  </li>
+                  {{ HTML::link('/ubicacion','Ubicación') }}
+                </li>
                 </ul>
               </div>
             </div>
-            <
+
 </br>
           </div>
               
         </div>
-    
-        <
+
+     
+
+
+
+        <!--Menu central
+        <div id="content" class="ui-layout-center">
+          <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+            </br>
+            <form class="form-search">
+              <input type="text" class="input-medium search-query">
+              <button type="submit" class="btn">Search by id</button>
+              </form>
+          </div>
+              <table class="table">
+  
+              </table>
+        </div> -->
 <!---------------------------------------------------->
-               
+<!--<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;"> 
+<h3 class="text-info" style="text-align:center;">UTEM</h3>
+</div> 
+-->        
+           
            </br>
         <div id="carousel" class="ui-layout-center">
           
@@ -207,6 +234,11 @@ body {
   </ul>
 </div>
 
+
+
+
+
+
 <code>
 #carousel ul {<br />
 &nbsp;&nbsp;&nbsp; list-style: none;<br />
@@ -221,6 +253,13 @@ body {
 } 
 </code>
 
+           
+         
+          
+
+            
+            
+  
 
   <!----------------------------------------------------> 
 
@@ -228,5 +267,4 @@ body {
     </body>
 
 </html>
-
 
