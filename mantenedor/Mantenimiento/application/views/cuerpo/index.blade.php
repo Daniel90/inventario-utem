@@ -142,7 +142,7 @@
             </h3>
             <div class="submenu">
               <ul>
-                <li>
+                  <li>
                     {{ HTML::link('/contactos','Contactos') }}
                   </li>
                   <li>
