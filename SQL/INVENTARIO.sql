@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.2.4
 -- Dumped by pg_dump version 9.2.4
--- Started on 2013-08-11 14:12:01
+-- Started on 2013-08-15 07:56:53
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -21,7 +21,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 1976 (class 0 OID 0)
+-- TOC entry 1987 (class 0 OID 0)
 -- Dependencies: 179
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -67,7 +67,7 @@ CREATE SEQUENCE administrador_id_seq
 ALTER TABLE public.administrador_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1977 (class 0 OID 0)
+-- TOC entry 1988 (class 0 OID 0)
 -- Dependencies: 169
 -- Name: administrador_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -126,7 +126,7 @@ CREATE SEQUENCE bajabienes_id_seq
 ALTER TABLE public.bajabienes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1978 (class 0 OID 0)
+-- TOC entry 1989 (class 0 OID 0)
 -- Dependencies: 173
 -- Name: bajabienes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -153,8 +153,8 @@ CREATE TABLE bienes (
     "Alto" character varying(5),
     "UdeMedidas" character varying(5),
     "Modelo" character varying(100),
-    "NumeroSerie" character varying(50) NOT NULL,
-    "AñoModelo" character varying(5),
+    "NumeroSerie" character varying(50),
+    "AnoModelo" character varying(5),
     "Marca" character varying(50),
     "Folio" character varying(20),
     "FechaComprobante" timestamp(0) without time zone,
@@ -187,7 +187,7 @@ CREATE SEQUENCE bienes_id_seq
 ALTER TABLE public.bienes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1979 (class 0 OID 0)
+-- TOC entry 1990 (class 0 OID 0)
 -- Dependencies: 171
 -- Name: bienes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -229,7 +229,7 @@ CREATE SEQUENCE centrocostos_id_seq
 ALTER TABLE public.centrocostos_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1980 (class 0 OID 0)
+-- TOC entry 1991 (class 0 OID 0)
 -- Dependencies: 175
 -- Name: centrocostos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -270,7 +270,7 @@ CREATE SEQUENCE historiales_id_seq
 ALTER TABLE public.historiales_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1981 (class 0 OID 0)
+-- TOC entry 1992 (class 0 OID 0)
 -- Dependencies: 177
 -- Name: historiales_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -330,6 +330,125 @@ ALTER TABLE ONLY centrocostos ALTER COLUMN id SET DEFAULT nextval('centrocostos_
 --
 
 ALTER TABLE ONLY historiales ALTER COLUMN id SET DEFAULT nextval('historiales_id_seq'::regclass);
+
+
+--
+-- TOC entry 1971 (class 0 OID 16630)
+-- Dependencies: 170
+-- Data for Name: administrador; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY administrador (id, usuario, password, created_at, updated_at) FROM stdin;
+10	administrador	$2a$08$yyn3tAcIksT2t7pwvbT.x.mred.4u.BqE3AV3JSJBhWizAIK97iVS	2013-02-01 00:00:00	2013-02-02 00:00:00
+\.
+
+
+--
+-- TOC entry 1993 (class 0 OID 0)
+-- Dependencies: 169
+-- Name: administrador_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('administrador_id_seq', 10, true);
+
+
+--
+-- TOC entry 1975 (class 0 OID 16772)
+-- Dependencies: 174
+-- Data for Name: bajabienes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY bajabienes (id, centrocostos_id, bienes_id, "idGrupo", "idSubGrupo", "idTipo", "Tipo", "Nombre", "Modelo", "Marca", "NumeroSerie", "NumeroDocumento", "FechaDocumento", "DecretoBaja", "FechaDecreto", "TipoDocumento", "MotivoBaja", "ValorActualBien", "CuentaDeMayor", "Depreciacion", "ValordeBaja", "Observaciones", created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1994 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: bajabienes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('bajabienes_id_seq', 5, true);
+
+
+--
+-- TOC entry 1973 (class 0 OID 16764)
+-- Dependencies: 172
+-- Data for Name: bienes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY bienes ("idGrupo", "idSubGrupo", "idTipo", "NumeroDeFactura", "Nombre", "Tipo", id, centrocostos_id, "Largo", "Ancho", "Alto", "UdeMedidas", "Modelo", "NumeroSerie", "AnoModelo", "Marca", "Folio", "FechaComprobante", "FechaCompra", "VidaUtil", "NumeroDeUnidades", "ValorUnitario", "CuentaDeMayor", "ValorTotal", created_at, updated_at) FROM stdin;
+01	36	01	00254	Computador con procesador Intel Core I7	x	19910	100001	30	40	15	cm	INTEL	MXL2351WDS	2011	HP	9666	2013-01-22 00:00:00	2013-04-23 00:00:00	6	90	366612	102003005	32995080	2013-08-10 20:46:44	2013-08-14 08:32:53
+\.
+
+
+--
+-- TOC entry 1995 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: bienes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('bienes_id_seq', 1, false);
+
+
+--
+-- TOC entry 1977 (class 0 OID 16783)
+-- Dependencies: 176
+-- Data for Name: centrocostos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY centrocostos (id, encargado, departamento, sede, telefono, created_at, updated_at) FROM stdin;
+100001	Mario Cataldo Navea	INDUSTRIA	MACUL	(56-2) 2787 7108	2013-08-01 00:00:00	2013-08-01 00:00:00
+100002	Mauro Castillo Valdés	INFORMATICA Y COMPUTACIÓN	MACUL	(56-2) 2787 7211	2013-08-01 00:00:00	2013-08-01 00:00:00
+100003	Zenobio Saldivia Maldonado	HUMANIDADES	ALONSO OVALLE	(56-2) 699 4131	2013-08-01 00:00:00	2013-08-01 00:00:00
+100004	Rafael Pizarro Alvarado	TRABAJO SOCIAL	VIDAURRE	(56-2) 2698 2297	2013-08-01 00:00:00	2013-08-01 00:00:00
+\.
+
+
+--
+-- TOC entry 1996 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: centrocostos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('centrocostos_id_seq', 1, false);
+
+
+--
+-- TOC entry 1979 (class 0 OID 16833)
+-- Dependencies: 178
+-- Data for Name: historiales; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY historiales (id, bienes_id, "Tipo", centrocostos_id, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1997 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: historiales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('historiales_id_seq', 16, true);
+
+
+--
+-- TOC entry 1969 (class 0 OID 16607)
+-- Dependencies: 168
+-- Data for Name: laravel_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY laravel_migrations (bundle, name, batch) FROM stdin;
+application	2013_06_22_034422_admin	1
+application	2013_06_22_035434_admin	2
+application	2013_06_23_225033_bienes	2
+application	2013_06_24_203632_migraalta	3
+application	2013_06_28_012854_bienes	4
+application	2013_07_31_173941_bajabien	4
+application	2013_08_01_165550_centrocosto	4
+application	2013_08_09_044816_historial	5
+\.
 
 
 --
@@ -446,7 +565,7 @@ ALTER TABLE ONLY historiales
 
 
 --
--- TOC entry 1975 (class 0 OID 0)
+-- TOC entry 1986 (class 0 OID 0)
 -- Dependencies: 5
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -457,7 +576,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2013-08-11 14:12:02
+-- Completed on 2013-08-15 07:56:53
 
 --
 -- PostgreSQL database dump complete
