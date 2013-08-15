@@ -19,27 +19,56 @@
       var webroot = '/home/index.blade.php';var wroot = '/Laravel/public/';var jsession_data = [];var theme = "UI Lightness";
     </script>
 
-    <style type="text/css">
+     <style type="text/css" title="currentStyle">
       @import "/css/demo_page.css";
       @import "/css/demo_table.css";
+      @import "/css/TableTools.css";
+      tr.selected {
+        background-color: red !important;
+      }
     </style>
-    <script type="text/javascript" language="javascript" src="/js/jquery.js"></script>
-    <script class="jsbin" src="http://datatables.net/download/build/jquery.dataTables.nightly.js"></script>
-      
+   
+    <script type="text/javascript" charset="utf-8" src="/js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/ZeroClipboard.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/TableTools.js"></script>
       {{ HTML::script('js/jquery.Rut.js') }}
       {{ HTML::script('js/jquery.validate.js') }}
       {{ HTML::script('js/Utilitarios.js') }}
       {{ HTML::script('js/jquery.selectboxes.js') }}
-      {{ HTML::script('js/jquery-ui-1.8.6.custom.min.js') }}
+        {{ HTML::script('js/jquery-ui-1.8.6.custom.min.js') }}
       {{ HTML::script('js/jquery.ui.datepicker-es.js') }}
-      {{ HTML::script('js/jquery.layout.min.js') }}
+        {{ HTML::script('js/jquery.layout.min.js') }}
       {{ HTML::script('js/i18n/grid.locale-sp.js') }}
-      {{ HTML::script('js/jquery.jqGrid.min.js') }}
+         {{ HTML::script('js/jquery.jqGrid.min.js') }}
       {{ HTML::script('js/general.js') }}
       {{ HTML::script('js/themeswitchertool.js') }}
       {{ HTML::script('js/layout-default.js') }}
       
-      <script>
+     <script>
+$(document).ready( function () {
+        
+        var oTable = $('#example').dataTable({
+          
+          "sPaginationType": "full_numbers",
+          "oLanguage": {
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Ningún dato disponible en esta tablas",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sSearch":         "Buscar:"
+            
+          },
+          "sDom": 'T<"clear">lfrtip',
+          "oTableTools": {
+            "sSwfPath": "/swf/copy_csv_xls_pdf.swf",
+          }
+
+          });
+             } );
+</script>
+    <!--  <script>
         $(document).ready(function() {
             $('#example').dataTable( {
                 "aaSorting": [[ 1, "desc" ]],
@@ -70,7 +99,7 @@
             } );
         });
         
-    </script>
+    </script> -->
     
     </head>
     <body>
@@ -255,13 +284,14 @@
       </table>
 
     </div>
+    <!-- 
     </br>
              <script>var pfHeaderImgUrl = '';var pfHeaderTagline = '';var pfdisableClickToDel = 0;var pfHideImages = 0;var pfImageDisplayStyle = 'right';var pfDisablePDF = 0;var pfDisableEmail = 0;var pfDisablePrint = 0;var pfCustomCSS = '';var pfBtVersion='1';(function(){var js, pf;pf = document.createElement('script');pf.type = 'text/javascript';if('https:' == document.location.protocol){js='https://pf-cdn.printfriendly.com/ssl/main.js'}else{js='http://cdn.printfriendly.com/printfriendly.js'}pf.src=js;document.getElementsByTagName('head')[0].appendChild(pf)})();</script>
            <a href="http://www.printfriendly.com" style="color:#6D9F00;text-decoration:none;" class="printfriendly" onclick="window.print();return false;" title="Printer Friendly and PDF">
             <img style="border:none;-webkit-box-shadow:none;box-shadow:none;margin:0 6px"  src="http://cdn.printfriendly.com/pf-print-icon.gif" width="16" height="15" alt="Print Friendly Version of this page" />Print 
             <img style="border:none;-webkit-box-shadow:none;box-shadow:none;margin:0 6px"  src="http://cdn.printfriendly.com/pf-pdf-icon.gif" width="12" height="12" alt="Get a PDF version of this webpage" />PDF
           </a>  
-           
+      -->     
         </div>
         
     </div>
