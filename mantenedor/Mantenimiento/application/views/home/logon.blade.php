@@ -77,16 +77,11 @@
                         <input type="checkbox" value="remember-me"> Remember me
                     </label>
                     <button class="btn btn-success" type="submit">Acceder</button>
-                    <a href = "/registrarse" title = "Registrarse">Ayuda</a>
+                    <a href = "/contactos" title = "Ayuda">Ayuda</a>
                     @if(Session::has('login_errors'))
                             <p style="color:red">Usuario o contraseña incorrectos<p>
                     @endif
                 {{ Form::close() }}
-            
-
-          
-
-            
 
             </div>
         </div>
