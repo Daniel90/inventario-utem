@@ -222,7 +222,7 @@
           <h4>Antecedentes contables</h4>
 
           {{ Form::text('folioComprobante_text','',array('placeholder' => 'Folio comprobante')) }}
-          {{ Form::text('fechaComprobante_text','',array('id' => 'f_rangeStart','size' => '15','OnFocus' => 'this.blur()','style' => 'width:75px;margin-left:30px')) }}
+          {{ Form::text('fechaComprobante_text','',array('id' => 'f_rangeStart','size' => '15','OnFocus' => 'this.blur()','style' => 'width:75px;margin-left:30px','required')) }}
           <button id="f_rangeStart_trigger" class="btn btn-mini">...</button>
           <script type="text/javascript">
                RANGE_CAL_1 = new Calendar({
@@ -238,7 +238,7 @@
                        }
                });
           </script>
-          {{ Form::text('fechaCompra_text','',array('id' => 'f_rangeStart2','size' => '15','OnFocus' => 'this.blur()','style' => 'width:75px;margin-left:30px')) }}
+          {{ Form::text('fechaCompra_text','',array('id' => 'f_rangeStart2','size' => '15','OnFocus' => 'this.blur()','style' => 'width:75px;margin-left:30px','required')) }}
           <button id="f_rangeStart_trigger2" class="btn btn-mini">...</button>
           <script type="text/javascript">
                RANGE_CAL_1 = new Calendar({
