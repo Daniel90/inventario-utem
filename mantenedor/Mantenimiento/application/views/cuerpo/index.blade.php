@@ -35,7 +35,40 @@
         {{ HTML::script('js/jquery.jqGrid.min.js') }} <!--necesario-->
         {{ HTML::script('js/themeswitchertool.js') }} <!--necesario-->
         {{ HTML::script('js/layout-default.js') }} <!--necesario-->
+        <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
 
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+       .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 50px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
         
     </head>
 
@@ -109,8 +142,11 @@
             </h3>
             <div class="submenu">
               <ul>
-                <li style="border-bottom: none;padding-bottom:0px;">
-                  <a href="/*">...</a>
+                <li>
+                    {{ HTML::link('/contactos','Contactos') }}
+                  </li>
+                  <li>
+                  {{ HTML::link('/ubicacion','Ubicación') }}
                 </li>
               </ul>
             </div>
@@ -120,13 +156,40 @@
       </div>
       <!--Menu central-->
       <div id="content" class="ui-layout-center">
-        <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
-          </br>
-          <form class="form-search">
-            <input type="text" class="input-medium search-query">
-            <button type="submit" class="btn">Search by id</button>
-          </form>
+        <div class="jumbotron">
+          <h2 class="text-info" style="text-align:center;">Mantenedor inventario Universidad Técnologica Metropolitana</h2>
+          <hr>
+          <h4 class="muted">El mantenedor es el encargado de actualizar los registros del inventario de nuestra casa de estudios superiores con el fin de llevar un recuento seguro y eficaz de todas las partes que la componen, desde sillas hasta servidores Web</h4>
+          
         </div>
+        <hr>
+        <h4 class="text-info">El sitio cuenta con:</h4>
+      <div class="row-fluid marketing">
+        <div class="span6">
+          <h4>Administrar bienes</h4>
+          <p>Con "Administrar", el mantenedor tiene acceso a ingresar nuevos bienes 
+            para poderlos dar de alta en el sistema, la particularidad de esta opción es integrar un sistema de 
+            ingreso automático de bienes en caso de ser mas de 2 especies que es lo mas usual. 
+            Dar de baja un bien siempre comprobando con la base de datos, cambiar dependencias y 
+            actualizar el número de serie para bienes que fueron ingresados por cantidades, estas opciones siempre pudiendo visualizar lo que se esta cambiando.</p>
+
+
+
+         
+        </div>
+        <div class="span6">
+          <h4>Informes y consultas</h4>
+          <p>Con este apartado se generan vistas con tablas de los bienes. Son 3 vistas con un excelente diseño y funcionalidad.
+            Siempre se pueden hacer consultas, ordenar ,buscar, y generar distintos archivos con el fin de tener siempre un respaldo fisico de los datos.</p>
+
+          <h4>contactos</h4>
+          <p>Siempre puede estar en contacto con nosotros, estan suministrados nuestros coreos electronicos en caso de que algo no funcione correctamente.</p>
+
+          
+        </div>
+      </div>
+
+      <hr>
       </div>
       <footer class="ui-layout-south"></footer>
     </body>
